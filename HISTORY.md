@@ -1,5 +1,10 @@
 # Insult Error Change Log
 
+## v0.3.0
+
++ Added option to cast all uncaught exceptions to InsultErrors, thanks to
+  to Jacob McDonald for contributing.
+
 ## v0.2.1
 
 + Added insults from XKCD "code quality" series, with attribution

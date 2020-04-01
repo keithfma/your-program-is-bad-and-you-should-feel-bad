@@ -1,6 +1,13 @@
 Insult Error Change Log
 =======================
 
+v0.3.0
+------
+
+-  Added option to cast all uncaught exceptions to InsultErrors, thanks to
+   Jacob McDonald for contributing.
+
+
 v0.2.1
 ------
 

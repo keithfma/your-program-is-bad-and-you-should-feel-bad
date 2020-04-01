@@ -3,6 +3,8 @@ import random
 from collections import namedtuple
 
 
+# the main event! ----------
+
 class InsultError(Exception):
 
     RATING = 5
@@ -20,15 +22,29 @@ class InsultError(Exception):
         self.args = args
 
 
-def fuck_you(type, value, traceback):
-    """
-    sys.excepthook standin that injects an error but leaves the traceback
-    """
-    insult_error = InsultError()
-    # Call the original excepthook so we get a traceback printed out
-    sys.__excepthook__(type(insult_error), insult_error, traceback)
+# automatic insults ----------
+# TODO: preserve exception message if there is one?
 
-sys.excepthook = fuck_you
+
+def insulthook(rating=None):
+    """Return a sys.excepthook standin that injects InsultError, but leaves the traceback"""
+    def f(type, value, traceback):
+        """sys.excepthook standin that injects an error but leaves the traceback"""
+
+        exc = InsultError(rating=rating)
+        sys.__excepthook__(type(exc), exc, traceback)
+    return f
+
+
+def always_insult_me(rating=None):
+    """Replace uncaught exceptions with insults at or below rating"""
+    sys.excepthook = insulthook(rating)
+
+
+def dont_always_insult_me():
+    """Stop replacing uncaught exceptions with insults"""
+    sys.excepthook = sys.__excepthook__
+
 
 # insulting error names ----------
 
