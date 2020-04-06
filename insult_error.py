@@ -5,8 +5,17 @@ from collections import namedtuple
 
 # the main event! ----------
 
-# TODO: add a useful docstring
+
 class InsultError(Exception):
+    """
+    Randomized insulting error name and message
+
+    Arguments:
+        *args: positional arguments for anything you would normally pass when creating an
+            Exception object, usually just a message string
+        rating: optionally, set a limit on how offensive the error can be as a number between
+            1 and 10 (1 being tamest, and 10 being meanest), defaults to 5
+    """
 
     RATING = 5
 
@@ -16,6 +25,9 @@ class InsultError(Exception):
         # hack the error name to be a random insult rated <= rating
         name = random.choice([x.name for x in insult_names if x.rating <= rating])
         self.__class__.__name__ = name
+        # hack the error module name so it pretends to be a built-in, yields a prettier traceback
+        # see: traceback.format_exception_only method
+        self.__class__.__module__ = 'builtins'
         # if no message is provided, select a random insult
         if not args:
             msg = random.choice([x.msg for x in insult_messages if x.rating <= rating])
@@ -24,7 +36,6 @@ class InsultError(Exception):
 
 
 # automatic insults ----------
-# TODO: preserve exception message if there is one?
 
 
 def insulthook(rating=None, preserve_msg=False):
@@ -47,9 +58,9 @@ def insulthook(rating=None, preserve_msg=False):
     return f
 
 
-def always_insult_me(rating=None):
+def always_insult_me(rating=None, preserve_msg=False):
     """Replace uncaught exceptions with insults at or below rating"""
-    sys.excepthook = insulthook(rating)
+    sys.excepthook = insulthook(rating, preserve_msg)
 
 
 def dont_always_insult_me():

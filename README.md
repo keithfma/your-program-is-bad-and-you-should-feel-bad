@@ -9,12 +9,16 @@ a normal exception with a few differences:
 2. If no message is provided, the error will use a random insulting message
 3. A special keyword argument `rating` provides some control over how offensive
    you want the error and message to be (1 being tamest and 10 being meanest)
+   
+To start the abuse, you can either explicitly raise `InsultError`s in your code,
+or you can call `always_insult_me` to convert all unhandled exceptions to insults.
+This works by wrapping `sys.excepthook`, so your stack traces should not be changed.
 
 Please contribute! This package will be much more fun if not limited to the
-measily initial set of options. Obviously, racist, sexist, or other bullshit
+measly initial set of options. Obviously, racist, sexist, or other bullshit
 jokes are not welcome.
 
-## Example Usage
+## InsultError Example Usage
 
 ```python
 from insult_error import InsultError
@@ -38,7 +42,37 @@ raise InsultError(rating=6)
 # handle InsultError exceptions (just like normal, non-insulting errors)
 try:
     raise InsultError
-except InsultError
+except InsultError:
     print('Better luck next time!')
 # >>> Better luck next time!
+```
+
+# `always_insult_me` Example Usage
+
+```python
+from insult_error import always_insult_me, dont_always_insult_me
+
+# turn on ubiquitous insults, uncaught exceptions will be converted to InsultErrors and messages replaced too
+always_insult_me()
+raise ValueError('a normal message')
+# >>>
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# FuckYouBuddy: I don't have the time or the crayons to explain this to you
+
+# turn off insults, things go back to normal
+dont_always_insult_me()  
+raise ValueError('another normal message')
+# >>>
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# ValueError: another normal message
+
+# turn insults back on, but this time preserve error messages
+always_insult_me(preserve_msg=True)
+raise ValueError('a normal message')
+# >>>
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# FuckYouBuddy: a normal message
 ```
