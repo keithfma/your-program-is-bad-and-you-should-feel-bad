@@ -1,9 +1,15 @@
 # Insult Error Change Log
 
+## v0.3.1
+
++ Makes casting uncaught exceptions to `InsultError`s optional
++ Beautifies error messages by pretending `InsultError` is a builtin
++ Adds unit tests
+
 ## v0.3.0
 
-+ Added option to cast all uncaught exceptions to InsultErrors, thanks to
-  to Jacob McDonald for contributing.
++ Added option to cast all uncaught exceptions to `InsultError`s, thanks to
+  to Jacob McDonald for contributing
 
 ## v0.2.1
 

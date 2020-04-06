@@ -89,7 +89,7 @@ def test_insulthook_without_message(preserve, rating, capsys):
 
     insulthook(rating=rating, preserve_msg=preserve)(*ref_info)
     obs_name, obs_msg, obs_tb = parse_exc_text(capsys)
-    assert obs_name.lstrip('insult_error.') in valid_names(rating)
+    assert obs_name in valid_names(rating)
     assert obs_msg in valid_msgs(rating)
     assert obs_tb == ref_tb
 
