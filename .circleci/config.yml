@@ -18,29 +18,7 @@ jobs:
                 name: Test
                 command: python -m pytest test_insult_error.py
 
-    release:
-        executor: python/default
-        steps:
-            - checkout
-            - python/load-cache
-            - python/install-deps
-            - python/save-cache
-            - run:
-                  name: Install
-                  command: pip install .
-            - run:
-                  name: Test
-                  command: python -m pytest test_insult_error.py
-
-
 workflows:
     main:
         jobs:
             - build-and-test
-            - approve-for-release:
-                type: approval
-                requires:
-                    - build-and-test
-            - release:
-                requires:
-                    - approve-for-release
