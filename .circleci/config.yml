@@ -12,8 +12,11 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
+          name: Install
+          command: pip install .
+      - run:
           name: Test
+          command: pytest test_insult_error.py
 
 workflows:
   main:
