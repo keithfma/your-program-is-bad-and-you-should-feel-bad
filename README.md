@@ -1,5 +1,7 @@
 # Intentionally Insulting Exceptions for Python
 
+Master Branch Status: https://circleci.com/gh/keithfma/insult_error.svg?style=shield
+
 This package provides a set of insulting exceptions you can use to make your
 future self laugh, bother your collaborators, or both.
 
